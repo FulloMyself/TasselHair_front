@@ -12,22 +12,35 @@ export const useDataFetching = (fetchFunction, dependencies = []) => {
       try {
         setLoading(true);
         setError(null);
-        console.log('Fetching data...');
+        console.log('Fetching data from:', process.env.REACT_APP_API_URL);
         
         const response = await fetchFunction();
         console.log('API Response:', response);
         
-        // Handle different response structures
         const responseData = response.data?.data || response.data || [];
-        console.log('Extracted data:', responseData);
         
         if (isMounted) {
           setData(responseData);
         }
       } catch (err) {
-        console.error('Fetch error:', err);
+        console.error('Fetch error details:', {
+          message: err.message,
+          code: err.code,
+          response: err.response?.data,
+          config: err.config
+        });
+        
         if (isMounted) {
-          setError(err.message || 'Failed to fetch data');
+          // Provide user-friendly error message
+          let errorMessage = 'Failed to fetch data';
+          if (err.code === 'ERR_NETWORK') {
+            errorMessage = 'Cannot connect to server. Please check your internet connection or try again later.';
+          } else if (err.response?.status === 404) {
+            errorMessage = 'API endpoint not found. Please check server configuration.';
+          } else if (err.response?.status === 500) {
+            errorMessage = 'Server error. Please try again later.';
+          }
+          setError(errorMessage);
         }
       } finally {
         if (isMounted) {

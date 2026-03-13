@@ -1,10 +1,14 @@
 import axios from 'axios';
 
+// Use environment variable with fallback
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
+
+console.log('API Base URL:', BASE_URL); // Add this to verify in console
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
