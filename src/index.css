@@ -1,0 +1,616 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-beige: #F5F1E8;
+    --primary-brown: #6B5D52;
+    --accent-pink: #E8B4C8;
+    --secondary-beige: #EDE6D9;
+    --text-dark: #4A4139;
+    --border: #D4C5B3;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --info: #3b82f6;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--primary-beige);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-brown);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--secondary-beige);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-brown);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-pink);
+  }
+
+  ::selection {
+    background: var(--accent-pink);
+    color: white;
+  }
+}
+
+@layer components {
+
+  /* Container */
+  .container-custom {
+    @apply container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-accent-pink text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+
+  .btn-secondary {
+    @apply bg-primary-brown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-brown focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary-brown text-primary-brown px-6 py-3 rounded-lg font-semibold hover:bg-primary-brown hover:text-white transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-brown focus:ring-opacity-50;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-border;
+  }
+
+  .card-hover {
+    @apply transform transition-all duration-300 hover:scale-105 hover:shadow-xl;
+  }
+
+  /* Form inputs */
+  .input-primary {
+    @apply w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-pink focus:border-transparent bg-white text-text-dark placeholder-gray-400 transition-all duration-300;
+  }
+
+  .input-error {
+    @apply border-error focus:ring-error;
+  }
+
+  .label-primary {
+    @apply block text-sm font-medium text-primary-brown mb-1;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+  }
+
+  .badge-success {
+    @apply badge bg-success text-white;
+  }
+
+  .badge-warning {
+    @apply badge bg-warning text-white;
+  }
+
+  .badge-error {
+    @apply badge bg-error text-white;
+  }
+
+  .badge-info {
+    @apply badge bg-info text-white;
+  }
+
+  .badge-sale {
+    @apply badge bg-accent-pink text-white absolute top-2 left-2;
+  }
+
+  /* Tables */
+  .table-container {
+    @apply overflow-x-auto bg-white rounded-lg shadow;
+  }
+
+  .table {
+    @apply min-w-full divide-y divide-border;
+  }
+
+  .table th {
+    @apply px-6 py-3 bg-secondary-beige text-left text-xs font-medium text-primary-brown uppercase tracking-wider;
+  }
+
+  .table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-text-dark;
+  }
+
+  .table tr {
+    @apply hover:bg-secondary-beige transition-colors duration-200;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply text-primary-brown hover:text-accent-pink transition-colors duration-300 font-medium;
+  }
+
+  .nav-link-active {
+    @apply text-accent-pink font-semibold;
+  }
+
+  /* Product grid */
+  .product-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+  }
+
+  .service-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  /* Price display */
+  .price {
+    @apply text-2xl font-bold text-primary-brown;
+  }
+
+  .price-sale {
+    @apply text-2xl font-bold text-accent-pink;
+  }
+
+  .price-original {
+    @apply text-lg text-gray-400 line-through ml-2;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-accent-pink;
+  }
+
+  .spinner-lg {
+    @apply animate-spin rounded-full h-12 w-12 border-b-2 border-accent-pink;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm transition-all duration-300;
+  }
+
+  .modal-content {
+    @apply bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl transform transition-all duration-300;
+  }
+
+  /* Dashboard layouts */
+  .dashboard-layout {
+    @apply flex min-h-screen bg-primary-beige;
+  }
+
+  .dashboard-sidebar {
+    @apply w-64 bg-white shadow-lg fixed h-full overflow-y-auto;
+  }
+
+  .dashboard-main {
+    @apply flex-1 ml-64 p-8;
+  }
+
+  .stats-card {
+    @apply bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow duration-300;
+  }
+
+  .stats-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center;
+  }
+
+  /* Hero sections */
+  .hero-section {
+    @apply relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden;
+  }
+
+  .hero-overlay {
+    @apply absolute inset-0 bg-black bg-opacity-40;
+  }
+
+  .hero-content {
+    @apply relative z-10 text-white text-center max-w-4xl mx-auto px-4;
+  }
+
+  .hero-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-up;
+  }
+
+  .hero-subtitle {
+    @apply text-xl md:text-2xl mb-8 animate-slide-up;
+  }
+
+  /* Section styles */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-center mb-12 relative;
+  }
+
+  .section-title::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent-pink mt-4;
+  }
+
+  /* Product card */
+  .product-card {
+    @apply card relative;
+  }
+
+  .product-image {
+    @apply w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300;
+  }
+
+  .product-info {
+    @apply p-4;
+  }
+
+  .product-name {
+    @apply text-lg font-semibold text-primary-brown mb-2;
+  }
+
+  .product-price {
+    @apply text-xl font-bold text-accent-pink;
+  }
+
+  /* Service card */
+  .service-card {
+    @apply card p-6 text-center;
+  }
+
+  .service-icon {
+    @apply w-16 h-16 mx-auto mb-4 text-accent-pink group-hover:scale-110 transition-transform duration-300;
+  }
+
+  /* Cart */
+  .cart-sidebar {
+    @apply fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-2xl z-50 transform transition-transform duration-300 overflow-y-auto;
+  }
+
+  .cart-item {
+    @apply flex items-center space-x-4 p-4 border-b border-border;
+  }
+
+  .cart-item-image {
+    @apply w-16 h-16 object-cover rounded;
+  }
+
+  .cart-item-details {
+    @apply flex-1;
+  }
+
+  .cart-item-name {
+    @apply text-sm font-medium text-primary-brown;
+  }
+
+  .cart-item-price {
+    @apply text-sm font-bold text-accent-pink;
+  }
+
+  .cart-quantity-controls {
+    @apply flex items-center space-x-2 mt-2;
+  }
+
+  .cart-quantity-btn {
+    @apply w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-secondary-beige transition-colors duration-200;
+  }
+
+  /* Pagination */
+  .pagination {
+    @apply flex justify-center items-center space-x-2 mt-8;
+  }
+
+  .pagination-btn {
+    @apply px-4 py-2 rounded-lg border border-border hover:bg-accent-pink hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-text-dark;
+  }
+
+  .pagination-active {
+    @apply bg-accent-pink text-white;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    @apply flex flex-wrap gap-4 mb-8 p-4 bg-white rounded-lg shadow;
+  }
+
+  .filter-select {
+    @apply px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-pink min-w-[150px];
+  }
+
+  /* Rating stars */
+  .rating {
+    @apply flex items-center space-x-1;
+  }
+
+  .star-filled {
+    @apply text-yellow-400;
+  }
+
+  .star-empty {
+    @apply text-gray-300;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply w-full h-2 bg-secondary-beige rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full bg-accent-pink transition-all duration-300;
+  }
+
+  /* Timeline */
+  .timeline {
+    @apply relative border-l-2 border-accent-pink ml-3;
+  }
+
+  .timeline-item {
+    @apply mb-8 ml-6;
+  }
+
+  .timeline-dot {
+    @apply absolute -left-3 mt-1.5 w-6 h-6 bg-accent-pink rounded-full border-4 border-white;
+  }
+
+  /* Accordion */
+  .accordion {
+    @apply border border-border rounded-lg overflow-hidden;
+  }
+
+  .accordion-header {
+    @apply w-full px-4 py-3 bg-secondary-beige text-left font-medium hover:bg-opacity-80 transition-colors duration-200;
+  }
+
+  .accordion-content {
+    @apply px-4 py-3 bg-white;
+  }
+
+  /* Tabs */
+  .tabs {
+    @apply border-b border-border;
+  }
+
+  .tab {
+    @apply inline-block px-6 py-3 text-primary-brown hover:text-accent-pink transition-colors duration-200 font-medium;
+  }
+
+  .tab-active {
+    @apply text-accent-pink border-b-2 border-accent-pink;
+  }
+
+  /* Tooltips */
+  .tooltip {
+    @apply relative inline-block;
+  }
+
+  .tooltip-text {
+    @apply invisible absolute z-10 bg-primary-brown text-white text-sm rounded-lg py-2 px-3 bottom-full left-1/2 transform -translate-x-1/2 -translate-y-2 opacity-0 transition-all duration-200 whitespace-nowrap;
+  }
+
+  .tooltip:hover .tooltip-text {
+    @apply visible opacity-100;
+  }
+
+  /* Image upload */
+  .image-upload {
+    @apply border-2 border-dashed border-border rounded-lg p-4 text-center hover:border-accent-pink transition-colors duration-200 cursor-pointer;
+  }
+
+  .image-preview {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4 mt-4;
+  }
+
+  .image-preview-item {
+    @apply relative rounded-lg overflow-hidden;
+  }
+
+  .image-preview-remove {
+    @apply absolute top-2 right-2 bg-error text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200;
+  }
+
+  /* Calendar */
+  .calendar {
+    @apply bg-white rounded-lg shadow p-4;
+  }
+
+  .calendar-header {
+    @apply flex items-center justify-between mb-4;
+  }
+
+  .calendar-grid {
+    @apply grid grid-cols-7 gap-1;
+  }
+
+  .calendar-day {
+    @apply aspect-square flex items-center justify-center rounded-lg hover:bg-secondary-beige transition-colors duration-200 cursor-pointer;
+  }
+
+  .calendar-day-selected {
+    @apply bg-accent-pink text-white hover:bg-accent-pink;
+  }
+
+  .calendar-day-disabled {
+    @apply text-gray-300 cursor-not-allowed hover:bg-transparent;
+  }
+}
+
+@layer utilities {
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .animation-delay-1000 {
+    animation-delay: 1000ms;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, var(--primary-beige) 0%, var(--secondary-beige) 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, #d49bb3 100%);
+  }
+
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-clamp: 3;
+  }
+}
+
+/* Third-party overrides */
+.react-datepicker-wrapper {
+  @apply w-full;
+}
+
+.react-datepicker__input-container input {
+  @apply input-primary;
+}
+
+.react-datepicker {
+  @apply font-sans border-border !important;
+}
+
+.react-datepicker__header {
+  @apply bg-secondary-beige border-border !important;
+}
+
+.react-datepicker__current-month {
+  @apply text-primary-brown font-semibold !important;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-accent-pink text-white !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-accent-pink bg-opacity-50 !important;
+}
+
+/* React-select customization */
+.react-select__control {
+  @apply border-border hover:border-accent-pink !important;
+}
+
+.react-select__control--is-focused {
+  @apply shadow-none border-accent-pink ring-2 ring-accent-pink ring-opacity-50 !important;
+}
+
+.react-select__option--is-focused {
+  @apply bg-secondary-beige !important;
+}
+
+.react-select__option--is-selected {
+  @apply bg-accent-pink !important;
+}
+
+/* React-phone-input-2 customization */
+.react-tel-input .form-control {
+  @apply input-primary pl-12 !important;
+}
+
+.react-tel-input .flag-dropdown {
+  @apply border-border rounded-l-lg !important;
+}
+
+.react-tel-input .selected-flag {
+  @apply bg-secondary-beige rounded-l-lg hover:bg-secondary-beige !important;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    @apply w-full h-auto fixed top-0 left-0 transform -translate-x-full;
+  }
+
+  .dashboard-sidebar.open {
+    @apply transform translate-x-0;
+  }
+
+  .dashboard-main {
+    @apply ml-0;
+  }
+
+  .hero-title {
+    @apply text-3xl;
+  }
+
+  .hero-subtitle {
+    @apply text-lg;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  .print-only {
+    display: block;
+  }
+}
