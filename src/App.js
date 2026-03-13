@@ -54,7 +54,7 @@ const AppContent = () => {
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter
+     <BrowserRouter basename="/TasselHair_front"
         future={{
           v7_startTransition: true,
           v7_relativeSplatPath: true,
