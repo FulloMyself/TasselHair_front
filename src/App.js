@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AnimatePresence } from 'framer-motion';
@@ -54,7 +54,7 @@ const AppContent = () => {
 function App() {
   return (
     <ErrorBoundary>
-     <BrowserRouter basename="/TasselHair_front"
+     <HashRouter
         future={{
           v7_startTransition: true,
           v7_relativeSplatPath: true,
@@ -68,7 +68,7 @@ function App() {
             </CartProvider>
           </NotificationProvider>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </ErrorBoundary>
   );
 }
