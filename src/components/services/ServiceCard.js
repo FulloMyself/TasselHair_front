@@ -1,14 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatCurrency } from '../../utils/formatters';
-import { FaClock } from 'react-icons/fa';
+import { FaClock, FaTag } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import defaultImage from '../../assets/images/service-placeholder.jpg';
 
 const ServiceCard = ({ service }) => {
-  // Add debug log
-  console.log('Rendering ServiceCard:', service?.name);
+  const [imageError, setImageError] = React.useState(false);
 
-  if (!service) return null;
+  const getImageUrl = () => {
+    if (imageError) return defaultImage;
+    
+    if (service.image) {
+      if (service.image.startsWith('http')) {
+        return service.image;
+      }
+      if (process.env.NODE_ENV === 'production') {
+        return `${process.env.PUBLIC_URL}${service.image}`;
+      }
+      return service.image.startsWith('/') ? service.image : `/${service.image}`;
+    }
+    return defaultImage;
+  };
 
   return (
     <motion.div
@@ -19,9 +32,10 @@ const ServiceCard = ({ service }) => {
       <Link to={`/services/${service._id}`}>
         <div className="relative overflow-hidden rounded-t-lg">
           <img
-            src={service.images?.[0] || '/images/service-placeholder.jpg'}
+            src={getImageUrl()}
             alt={service.name}
             className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+            onError={() => setImageError(true)}
           />
           <div className="absolute top-2 right-2 bg-accent-pink text-white px-3 py-1 rounded-full text-sm">
             {service.duration} min

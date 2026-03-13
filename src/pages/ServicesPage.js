@@ -10,16 +10,23 @@ const ServicesPage = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Use the custom hook for data fetching
+  // Use the custom hook with a large limit to get all services
   const { data: services, loading, error } = useDataFetching(
-    () => serviceAPI.getAllServices({ isActive: true }),
-    []
+    (params) => serviceAPI.getAllServices({
+      ...params,
+      isActive: true,
+      limit: 1000 // Get all services
+    }),
+    [],
+    { params: { limit: 1000 } }
   );
+
+  console.log(`ServicesPage loaded ${services.length} services`); // Debug log
 
   // Memoize filtered services
   const filteredServices = useMemo(() => {
     console.log('Filtering services, total:', services.length);
-    
+
     let filtered = [...services];
 
     if (searchTerm) {
@@ -48,8 +55,8 @@ const ServicesPage = () => {
     return (
       <div className="container-custom py-12 text-center">
         <p className="text-error text-lg">{error}</p>
-        <button 
-          onClick={() => window.location.reload()} 
+        <button
+          onClick={() => window.location.reload()}
           className="btn-primary mt-4"
         >
           Retry
@@ -121,5 +128,11 @@ const ServicesPage = () => {
     </motion.div>
   );
 };
+
+// In ServicesPage.js, after fetching data:
+useEffect(() => {
+  console.log('Services from API:', services);
+  console.log('Total services count:', services.length);
+}, [services]);
 
 export default ServicesPage;

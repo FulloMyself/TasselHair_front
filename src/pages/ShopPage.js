@@ -20,14 +20,19 @@ const ShopPage = () => {
 
   // Use the custom hook for data fetching
   const { data: products, loading, error } = useDataFetching(
-    () => productAPI.getAllProducts({ isActive: true }),
-    []
+    (params) => productAPI.getAllProducts({
+      ...params,
+      isActive: true,
+      limit: 1000 // Get all products
+    }),
+    [],
+    { params: { limit: 1000 } }
   );
 
   // Memoize filtered products
   const filteredProducts = useMemo(() => {
     console.log('Filtering products, total:', products.length);
-    
+
     let filtered = [...products];
 
     // Search filter
@@ -114,8 +119,8 @@ const ShopPage = () => {
     return (
       <div className="container-custom py-12 text-center">
         <p className="text-error text-lg">{error}</p>
-        <button 
-          onClick={() => window.location.reload()} 
+        <button
+          onClick={() => window.location.reload()}
           className="btn-primary mt-4"
         >
           Retry

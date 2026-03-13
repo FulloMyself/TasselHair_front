@@ -13,13 +13,18 @@ const GiftsPage = () => {
 
   // Use the custom hook for data fetching
   const { data: gifts, loading, error } = useDataFetching(
-    () => giftAPI.getAllGiftPackages({ isActive: true }),
-    []
+    (params) => giftAPI.getAllGiftPackages({
+      ...params,
+      isActive: true,
+      limit: 1000 // Get all gift packages
+    }),
+    [],
+    { params: { limit: 1000 } }
   );
 
   const filteredGifts = useMemo(() => {
     console.log('Filtering gifts, total:', gifts.length);
-    
+
     let filtered = [...gifts];
 
     if (searchTerm) {
@@ -54,8 +59,8 @@ const GiftsPage = () => {
     return (
       <div className="container-custom py-12 text-center">
         <p className="text-error text-lg">{error}</p>
-        <button 
-          onClick={() => window.location.reload()} 
+        <button
+          onClick={() => window.location.reload()}
           className="btn-primary mt-4"
         >
           Retry

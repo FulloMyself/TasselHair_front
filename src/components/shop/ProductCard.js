@@ -5,13 +5,51 @@ import { formatCurrency } from '../../utils/formatters';
 import { FaShoppingCart, FaHeart, FaStar } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
+// Import a default placeholder image
+import defaultImage from '../../assets/images/product-placeholder.jpg';
+
 const ProductCard = ({ product, onQuickView }) => {
   const { addToCart } = useCart();
   const [isWishlisted, setIsWishlisted] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
+  const [imageError, setImageError] = React.useState(false);
 
   const isOnSale = product.salePrice && product.salePrice > 0 && product.salePrice < product.price;
   const discount = isOnSale ? Math.round(((product.price - product.salePrice) / product.price) * 100) : 0;
+
+  // Construct the correct image path
+  const getImageUrl = () => {
+    if (imageError) return defaultImage;
+    
+    // If product has an image path from database
+    if (product.image) {
+      // If it's already a full URL, use it
+      if (product.image.startsWith('http')) {
+        return product.image;
+      }
+      // For GitHub Pages deployment
+      if (process.env.NODE_ENV === 'production') {
+        return `${process.env.PUBLIC_URL}${product.image}`;
+      }
+      // For local development
+      return product.image.startsWith('/') ? product.image : `/${product.image}`;
+    }
+    
+    // Try to construct from product name if no image field
+    if (product.name) {
+      const imageName = product.name
+        .replace(/[^a-zA-Z0-9]/g, '_')
+        .replace(/_+/g, '_')
+        + '.jpg';
+      return `/images/products/${imageName}`;
+    }
+    
+    return defaultImage;
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -23,7 +61,6 @@ const ProductCard = ({ product, onQuickView }) => {
     e.preventDefault();
     e.stopPropagation();
     setIsWishlisted(!isWishlisted);
-    // TODO: Implement wishlist API
   };
 
   return (
@@ -39,9 +76,10 @@ const ProductCard = ({ product, onQuickView }) => {
       <Link to={`/shop/product/${product._id}`}>
         <div className="relative overflow-hidden">
           <img
-            src={product.images?.[0] || '/images/product-placeholder.jpg'}
+            src={getImageUrl()}
             alt={product.name}
             className="product-image"
+            onError={handleImageError}
           />
           
           {/* Sale Badge */}
