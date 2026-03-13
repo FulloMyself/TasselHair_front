@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TasselHair_front/static/css/main.aa9fd79b.css",
+    "main.js": "/TasselHair_front/static/js/main.6e405f18.js",
+    "index.html": "/TasselHair_front/index.html",
+    "main.aa9fd79b.css.map": "/TasselHair_front/static/css/main.aa9fd79b.css.map",
+    "main.6e405f18.js.map": "/TasselHair_front/static/js/main.6e405f18.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aa9fd79b.css",
+    "static/js/main.6e405f18.js"
+  ]
+}
